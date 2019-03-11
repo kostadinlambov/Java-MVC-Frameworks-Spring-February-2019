@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SupplierServiceImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">org.softuni.cardealer.service</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SupplierServiceImpl (org.softuni.cardealer.service)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SupplierServiceImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (17/ 17)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package org.softuni.cardealer.service;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import org.modelmapper.ModelMapper;
+<i>4</i>&nbsp;import org.softuni.cardealer.domain.entities.Supplier;
+<i>5</i>&nbsp;import org.softuni.cardealer.domain.models.service.SupplierServiceModel;
+<i>6</i>&nbsp;import org.softuni.cardealer.repository.SupplierRepository;
+<i>7</i>&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+<i>8</i>&nbsp;import org.springframework.stereotype.Service;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;@Service
+<i>11</i>&nbsp;public class SupplierServiceImpl implements SupplierService {
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    private final SupplierRepository supplierRepository;
+<i>14</i>&nbsp;    private final ModelMapper modelMapper;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    @Autowired
+<b class="fc"><i>17</i>&nbsp;    public SupplierServiceImpl(SupplierRepository supplierRepository, ModelMapper modelMapper) {</b>
+<b class="fc"><i>18</i>&nbsp;        this.supplierRepository = supplierRepository;</b>
+<b class="fc"><i>19</i>&nbsp;        this.modelMapper = modelMapper;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;    @Override
+<i>23</i>&nbsp;    public SupplierServiceModel saveSupplier(SupplierServiceModel supplierServiceModel) {
+<b class="fc"><i>24</i>&nbsp;        Supplier supplier = this.modelMapper.map(supplierServiceModel, Supplier.class);</b>
+<b class="fc"><i>25</i>&nbsp;        this.supplierRepository.saveAndFlush(supplier);</b>
+<i>26</i>&nbsp;
+<b class="fc"><i>27</i>&nbsp;        return this.modelMapper.map(supplier, SupplierServiceModel.class);</b>
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    }
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    @Override
+<i>32</i>&nbsp;    public SupplierServiceModel editSupplier(SupplierServiceModel supplierServiceModel) {
+<b class="fc"><i>33</i>&nbsp;        Supplier supplier = this.supplierRepository.findById(supplierServiceModel.getId()).orElse(null);</b>
+<b class="fc"><i>34</i>&nbsp;        supplier.setName(supplierServiceModel.getName());</b>
+<b class="fc"><i>35</i>&nbsp;        supplier.setImporter(supplierServiceModel.isImporter());</b>
+<b class="fc"><i>36</i>&nbsp;        Supplier result = this.supplierRepository.saveAndFlush(supplier);</b>
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;        return this.modelMapper.map(result, SupplierServiceModel.class);</b>
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;    @Override
+<i>43</i>&nbsp;    public SupplierServiceModel deleteSupplier(String id) {
+<b class="fc"><i>44</i>&nbsp;        Supplier supplier = this.supplierRepository.findById(id).orElse(null);</b>
+<b class="fc"><i>45</i>&nbsp;        this.supplierRepository.delete(supplier);</b>
+<i>46</i>&nbsp;
+<b class="fc"><i>47</i>&nbsp;        return this.modelMapper.map(supplier, SupplierServiceModel.class);</b>
+<i>48</i>&nbsp;
+<i>49</i>&nbsp;    }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Override
+<i>52</i>&nbsp;    public SupplierServiceModel findSupplierById(String id) {
+<b class="fc"><i>53</i>&nbsp;        Supplier supplier = this.supplierRepository.findById(id).orElse(null);</b>
+<i>54</i>&nbsp;
+<b class="fc"><i>55</i>&nbsp;        return this.modelMapper.map(supplier, SupplierServiceModel.class);</b>
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;    }
+<i>58</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-03-11 06:41</div>
+</div>
+</body>
+</html>
