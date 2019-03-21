@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+
+    <main>
+        <div class="print-container container-fluid  w-50">
+            <h1 class="text-center mt-5">All Viruses</h1>
+            <table class="table mt-5" >
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Magnitude</th>
+                    <th scope="col">Released On</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:each="virus: ${viruses}">
+                    <tr>
+                        <td scope="row" th:text="${virusStat.index} + 1"></td>
+                        <td th:text="${virus.name}"></td>
+                        <td th:text="${virus.magnitude}"></td>
+                        <td th:text="${virus.releasedOn}"></td>
+                        <td > <a class="btn resident-evil-background text-white font-weight-bold mb-3" th:href="@{/viruses/edit/{id}(id=${virus.id})}" >Edit</a></td>
+                        <td > <a class="btn  resident-evil-background text-white font-weight-bold mb-3" th:href="@{/viruses/delete/{id}(id=${virus.id})}" >Delete</a></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+                <!--<a class="btn bg-exodia text-white font-weight-bold mb-3" th:href="@{/print/{id}(id=${document.id})}" >Print</a>-->
+                <!--<a class="btn bg-exodia text-white font-weight-bold mb-3" th:href="@{/details/{id}(id=${document.id})}">Details</a>-->
+            <!--</div>-->
+
+        </div>
+
+    </main>
+
+
+</div>
+
+</body>
+</html>

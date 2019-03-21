@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+
+    <main>
+        <div class="container mt-4 mb-5 w-25">
+            <h1 class="text-center">Delete Virus</h1>
+            <hr class="mt-3 mb-3">
+            <form th:action="@{/viruses/delete/{id}(id=${virusToDelete.getId()})}" th:method="post" th:object="${virusToDelete}">
+                <div class="form-group" >
+                    <label for="name">Name</label>
+                    <div
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            th:text="*{name}"
+                            th:disabled="true"
+                    ></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <div
+                            class="form-control"
+                            id="description"
+                            th:text="*{description}"
+                            th:disabled="true"
+                    ></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="side-effect">Side Effect</label>
+                    <div id="side-effect" class="form-control " th:text="*{sideEffects}" th:disabled="true"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="creator">Creator</label>
+                    <div id="creator" class="form-control " th:text="*{creator}" th:disabled="true"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="is-deadly">Is Curable?</label>
+                    <div id="is-deadly" class="form-control " th:text="*{deadly}" th:disabled="true"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="is-curable">Is Curable?</label>
+                    <div id="is-curable" class="form-control " th:text="*{curable}" th:disabled="true"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="mutation">Mutation</label>
+                    <div id="mutation" class="form-control " th:text="*{mutation}" th:disabled="true"></div>
+
+                </div>
+
+
+                <div class="form-group" >
+                    <label for="turnover-rate">Turnover Rate</label>
+                    <div
+                            type="number"
+                            class="form-control"
+                            id="turnover-rate"
+                            aria-describedby="turnoverRateHelp"
+                            th:text="*{turnoverRate}"
+                            th:disabled="true"
+                    ></div>
+                </div>
+
+                <div class="form-group" >
+                    <label for="hours-until-turn">Hours Until Turn</label>
+                    <div
+                            th:text="*{hoursUntilTurn}"
+                            type="number"
+                            class="form-control"
+                            id="hours-until-turn"
+                            th:disabled="true"
+                    ></div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="magnitude">Magnitude</label>
+                    <div id="magnitude" class="form-control " th:text="*{magnitude}" th:disabled="true"></div>
+
+                </div>
+
+                <div class="form-group" th:classappend="${#fields.hasErrors('releasedOn')} ? 'text-danger'">
+                    <label for="release-date">Release Date</label>
+                    <div id="release-date" class="form-control " th:text="*{releasedOn}" th:disabled="true"></div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn resident-evil-background text-center">Delete</button>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+
+</div>
+
+</body>
+</html>
