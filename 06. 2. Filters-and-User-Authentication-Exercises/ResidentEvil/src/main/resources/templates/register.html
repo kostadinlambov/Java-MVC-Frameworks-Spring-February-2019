@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid ">
+
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+
+    <form class="w-25 mx-auto  mt-5 mb-5" th:action="@{/register}" th:method="post">
+        <h1 class="text-center mb-4">Register</h1>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+        </div>
+        <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="confirm-password">Confirm Password:</label>
+            <input type="password" class="form-control" id="confirm-password" name="confirmPassword"
+                   placeholder="Confirm Password">
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary mt-3">Register</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

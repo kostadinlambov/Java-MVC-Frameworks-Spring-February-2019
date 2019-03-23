@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+
+    <main>
+        <div class="print-container container-fluid w-50">
+
+            <div class="d-flex justify-content-between align-content-center mt-5 mb-5">
+                <h1 class="page-title">Your Choice</h1>
+
+                <div class="button-wrapper d-flex justify-content-between align-content-center">
+                    <div class="form-check form-check-inline mr-5">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="viruses"
+                               value="option1">
+                        <label class="form-check-label" for="viruses">Viruses</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-5 ml-5">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="capitals"
+                               value="option2">
+                        <label class="form-check-label" for="capitals">Capitals</label>
+                    </div>
+                </div>
+            </div>
+            <div class="content  ">
+                <hr class="my-2 mb-3 mt-3 col-md-12 mx-auto"/>
+
+                <h2 class="text-center">Select, what data you want to visualize!</h2>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    const role = "[[${session.role}]]";
+
+    const createTable = (tableHeaders) => {
+        $('.content').children().remove();
+
+        const {firstRow, secondRow, thirdRow, fourthRow, viruses} = tableHeaders;
+
+        let table = $('<table>').addClass('table mt-5');
+        let tr = $('<tr>');
+        let th1 = $('<th>').text(firstRow).attr('scope', 'col');
+        tr.append(th1);
+        let th2 = $('<th>').text(secondRow).attr('scope', 'col');
+        tr.append(th2);
+        let th3 = $('<th>').text(thirdRow).attr('scope', 'col');
+        tr.append(th3);
+        let th4 = $('<th>').text(fourthRow).attr('scope', 'col');
+        tr.append(th4);
+
+        if (viruses && role !== 'USER') {
+            let th5 = $('<th>').text('Actions').attr('scope', 'col');
+            tr.append(th5);
+
+            let th6 = $('<th>').text('').attr('scope', 'col');
+            tr.append(th6);
+        }
+
+        table.append(tr);
+
+        $('.content').append(table);
+    };
+    const fillData = (dataArr, isVirus) => {
+            dataArr.forEach((input, index) => {
+                let tr = $('<tr>');
+
+                let td0 = $('<td>').text(index + 1);
+                let td1 = $('<td>').text(input.name);
+
+                tr.append(td0);
+                tr.append(td1);
+
+                if (isVirus ) {
+                    let td2 = $('<td>').text(input.magnitude);
+                    let td3 = $('<td>').text(input.releasedOn);
+
+                    tr.append(td2);
+                    tr.append(td3);
+
+                    if( role !== 'USER'){
+                        let tdEdit = $('<td>');
+                        let editBtn = $('<a>')
+                            .addClass("btn resident-evil-background text-white font-weight-bold mb-3")
+                            .attr('href', `/viruses/edit/${input.id}`)
+                            .text('Edit');
+
+                        tdEdit.append(editBtn);
+                        tr.append(tdEdit);
+
+                        let tdDelete = $('<td>');
+                        let deleteBtn = $('<a>')
+                            .addClass("btn  resident-evil-background text-white font-weight-bold mb-3")
+                            .attr('href', `/viruses/delete/${input.id}`)
+                            .text('Delete');
+
+                        tdDelete.append(deleteBtn);
+                        tr.append(tdDelete);
+                    }
+
+                } else {
+                    let td2 = $('<td>').text(input.latitude);
+                    let td3 = $('<td>').text(input.longitude);
+
+                    tr.append(td2);
+                    tr.append(td3);
+                }
+
+                $('.content').find('table').append(tr);
+            })
+        };
+
+    $("#viruses").change(() => {
+        fetch('/viruses/all')
+            .then((resp) => resp.json())
+            .then((resp) => {
+                console.log('resp: ', resp);
+
+                $('.page-title').text('All Viruses');
+
+                const tableHeaders = {
+                    'firstRow': '#',
+                    'secondRow': 'Name',
+                    'thirdRow': 'Magnitude',
+                    'fourthRow': 'Released On',
+                    'viruses': true,
+                };
+
+                createTable(tableHeaders);
+                fillData(resp, true);
+
+            }).catch(err => {
+            console.log("Something went wrong!");
+        })
+    });
+
+    $("#capitals").change(() => {
+        fetch('/capitals/all')
+            .then((resp) => resp.json())
+            .then((resp) => {
+                console.log('resp: ', resp);
+
+                $('.page-title').text('All Capitals');
+
+                const tableHeaders = {
+                    'firstRow': '#',
+                    'secondRow': 'Name',
+                    'thirdRow': 'Latitude',
+                    'fourthRow': 'Longitude',
+                };
+
+                createTable(tableHeaders);
+                fillData(resp, false);
+
+            }).catch(err => {
+            console.log("Something went wrong!");
+            console.log('Error: ', err);
+        })
+    });
+</script>
+
+</body>
+</html>

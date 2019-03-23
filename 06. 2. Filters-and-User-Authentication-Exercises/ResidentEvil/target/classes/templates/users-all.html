@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+    <th:block th:include="~{fragments/head}"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <header>
+        <th:block th:include="~{fragments/navbar}"></th:block>
+    </header>
+    <main>
+        <h1 class="page-title text-center mt-5">All Users</h1>
+        <table class="table w-50 mx-auto mt-5 mb-5 text-center">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:20%">#</th>
+                    <th scope="col" style="width:30%">Name</th>
+                    <th scope="col" style="width:50%">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="user: ${users}">
+                    <tr>
+                        <th class="col-1" th:text="${userStat.index} + 1" style="width:20%" scope="row">1</th>
+                        <td class="col-4" th:text="${user.username}" style="width:30%"></td>
+                        <td class="col-6" th:text="${user.email}" style="width:50%"></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+
+    </main>
+</div>
+</body>
+</html>
