@@ -1,0 +1,18 @@
+.resident-evil-background{
+    background: #900C45;
+    color: white;
+}
+
+.logout-btn{
+    border:none;
+    outline: none;
+    cursor: pointer;
+    background: #900C45;
+    color:white;
+}
+/*ul{*/
+    /*padding-left: 0;*/
+/*}*/
+/*ul li {*/
+    /*list-style: none;*/
+/*}*/

@@ -1,0 +1,224 @@
+<th:block th:fragment>
+    <div class="container mt-4 mb-5">
+        <h1 th:text="${title}" class="text-center mb-4"></h1>
+        <hr class="my-2 mb-3 mt-3 col-md-5 mx-auto"/>
+
+        <form
+                th:action="${action == 'add'}
+                ? @{'/viruses/' + ${action}}
+                : @{'/viruses/' + ${action} + '/' + ${bindingModel.id}}"
+                th:method="post"
+                th:object="${bindingModel}"
+                class="w-50 mx-auto mt-5 mb-5"
+        >
+            <div class="form-group" th:classappend="${#fields.hasErrors('name')} ? 'text-danger'">
+                <label for="name">Name</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        th:field="*{name}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+
+                >
+                <ul>
+                    <li th:each="error : ${#fields.errors('name')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('description')} ? 'text-danger'">
+                <label for="description">Description</label>
+                <textarea
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        rows="3"
+                        aria-describedby="descriptionHelp"
+                        th:field="*{description}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                ></textarea>
+                <ul>
+                    <li th:each="error : ${#fields.errors('description')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('sideEffects')} ? 'text-danger'">
+                <label for="side-effect">Side Effect</label>
+                <input
+                        th:field="*{sideEffects}"
+                        type="text"
+                        class="form-control"
+                        id="side-effect"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                <ul>
+                    <li th:each="error : ${#fields.errors('sideEffects')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="creator">Creator</label>
+                <select id="creator" class="form-control" th:field="*{creator}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                    <option
+                            th:each="creator: ${ T (org.kl.residentevil.domain.entities.Creator).values()}"
+                            th:value="${creator}"
+                            th:text="${creator}"
+                    >
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-check">
+                <input
+                        th:field="*{deadly}"
+                        type="checkbox"
+                        class="form-check-input"
+                        id="is-deadly"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                <label class="form-check-label" for="is-deadly">is Deadly?</label>
+            </div>
+
+            <div class="form-check">
+                <input
+                        th:field="*{curable}"
+                        type="checkbox"
+                        class="form-check-input"
+                        id="is-curable"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                <label class="form-check-label" for="is-curable">is Curable?</label>
+            </div>
+
+            <br/>
+
+            <div th:classappend="${#fields.hasErrors('mutation')} ? 'text-danger'">
+                <div class="form-check"
+                     th:each="mutation: ${ T (org.kl.residentevil.domain.entities.Mutation).values()}"
+                >
+                    <input
+                            th:field="*{mutation}"
+                            class="form-check-input"
+                            type="radio"
+                            name="exampleRadios"
+                            id="exampleRadios1"
+                            th:value="${mutation}"
+                            th:text="${mutation}"
+                            th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                            checked
+                    >
+                </div>
+                <ul>
+                    <li th:each="error : ${#fields.errors('mutation')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-check">
+                <input
+                        class="form-check-input"
+                        type="radio" name="exampleRadios"
+                        id="exampleRadios4"
+                        value="option4"
+                        disabled
+                >
+                <label class="form-check-label" for="exampleRadios4">
+                    Save Humanity
+                </label>
+            </div>
+
+            <br/>
+            <div class="form-group" th:classappend="${#fields.hasErrors('turnoverRate')} ? 'text-danger'">
+                <label for="turnover-rate">Turnover Rate</label>
+                <input
+                        type="number"
+                        class="form-control"
+                        id="turnover-rate"
+                        aria-describedby="turnoverRateHelp"
+                        th:field="*{turnoverRate}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                <ul>
+                    <li th:each="error : ${#fields.errors('turnoverRate')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('hoursUntilTurn')} ? 'text-danger'">
+                <label for="hours-until-turn">Hours Until Turn</label>
+                <input
+                        th:field="*{hoursUntilTurn}"
+                        type="number"
+                        class="form-control"
+                        id="hours-until-turn"
+                        aria-describedby="hoursHelp"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                <ul>
+                    <li th:each="error : ${#fields.errors('hoursUntilTurn')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label for="magnitude">Magnitude</label>
+                <select id="magnitude" class="form-control" th:field="*{magnitude}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+
+                >
+                    <option
+                            th:each="magnitude: ${ T (org.kl.residentevil.domain.entities.Magnitude).values()}"
+                            th:value="${magnitude}"
+                            th:text="${magnitude}"
+                    >
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('releasedOn')} ? 'text-danger'">
+                <label for="release-date">Release Date</label>
+                <input
+                        th:field="*{releasedOn}"
+                        th:value="${#temporals.format(bindingModel.releasedOn,'yyyy-MM-dd')}"
+
+                        type="date"
+                        class="form-control"
+                        id="release-date"
+                        aria-describedby="dateHelp"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+
+                >
+                <ul>
+                    <li th:each="error : ${#fields.errors('releasedOn')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+
+            <div class="form-group" th:classappend="${#fields.hasErrors('capitals')} ? 'text-danger'">
+                <label for="capitals">Affected Capitals</label>
+                <select multiple class="form-control" id="capitals" th:field="*{capitals}"
+                        th:attr="disabled=${action == 'delete'} ? 'disabled'"
+                >
+                    <option
+                            th:each="capital: ${capitals}"
+                            th:value="${capital.id}"
+                            th:text="${capital.name}">
+                    </option>
+                </select>
+                <ul>
+                    <li th:each="error : ${#fields.errors('capitals')}" th:text="${error}"></li>
+                </ul>
+            </div>
+
+
+            <!--<small id="inputVirusAffectedCapitalsHelp" class="form-text"-->
+                   <!--th:each="error : ${#fields.errors('capitals')}"-->
+                   <!--th:text="${error}">You must select capitals-->
+            <!--</small>-->
+            <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary" th:text="${#strings.capitalize(action)}"></button>
+            </div>
+        </form>
+    </div>
+
+
+</th:block>
